@@ -1,7 +1,7 @@
 import {Skia} from '@shopify/react-native-skia';
 import {curveBumpX, line, scaleLinear, scaleTime} from 'd3';
 import {DataPoint} from '../data/mock';
-import {LAYOUT} from '../constants/Layout';
+import {LAYOUT} from '../constants/layout';
 
 export const makeGraph = (data: DataPoint[], width: number, height: number) => {
   if (data) {
@@ -11,7 +11,10 @@ export const makeGraph = (data: DataPoint[], width: number, height: number) => {
     const minDate = data[0].Date;
     const y = scaleLinear()
       .domain([min, max])
-      .range([height - LAYOUT.spacing.GRAPH_TOP, LAYOUT.spacing.GRAPH_TOP]);
+      .range([
+        height - LAYOUT.spacing.GRAPH_VERTICAL,
+        LAYOUT.spacing.GRAPH_VERTICAL,
+      ]);
 
     const x = scaleTime()
       .domain([new Date(minDate), new Date(maxDate)])
@@ -29,6 +32,7 @@ export const makeGraph = (data: DataPoint[], width: number, height: number) => {
       curve: skPath!,
       maxDate,
       minDate,
+      timeFrames: data.length,
     };
   }
 };
