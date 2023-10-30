@@ -1,12 +1,12 @@
 import {useWindowDimensions} from 'react-native';
 import React from 'react';
-import {Text, matchFont, useFont} from '@shopify/react-native-skia';
+import {Text, useFont} from '@shopify/react-native-skia';
 import {
   SharedValue,
   interpolate,
   useDerivedValue,
 } from 'react-native-reanimated';
-import {LAYOUT} from '../constants/Layout';
+import {LAYOUT} from '../constants/layout';
 
 interface LabelProps {
   max: number;
@@ -39,7 +39,10 @@ export const Label = ({y, max, min, x, dates}: LabelProps) => {
     return format(
       interpolate(
         y.value,
-        [LAYOUT.spacing.GRAPH_TOP, height / 2 - LAYOUT.spacing.GRAPH_TOP],
+        [
+          LAYOUT.spacing.GRAPH_VERTICAL,
+          height / 2 - LAYOUT.spacing.GRAPH_VERTICAL,
+        ],
         [max, min],
       ),
     );

@@ -1,21 +1,9 @@
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
-import {
-  Canvas,
-  RoundedRect,
-  LinearGradient,
-  vec,
-} from '@shopify/react-native-skia';
+import {Canvas, RoundedRect} from '@shopify/react-native-skia';
 import {handleDate} from '../utils/handleDate';
 import {useDerivedValue, withSpring} from 'react-native-reanimated';
-
-enum GraphPeriods {
-  oneWeek = '1week',
-  oneMonth = '1month',
-  threeMonth = '3month',
-  sixMonth = '6month',
-  oneYear = '1year',
-}
+import {GraphPeriods} from '../constants/time';
 
 interface SelectionProps {
   setStartDate: (date: string) => void;
