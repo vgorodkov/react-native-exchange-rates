@@ -14,6 +14,12 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-ReactNativeExchangeRates-ReactNativeExchangeRatesTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-ReactNativeExchangeRates-ReactNativeExchangeRatesTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		F6346352748E42FBB32B9692 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D8E0F10E1BDF4C968040D1D6 /* Lato-Black.ttf */; };
+		8A8AE88DC6D04E0A96EDA0C7 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED1A2A3D7C834A3DAEFA7605 /* Lato-Bold.ttf */; };
+		C4E3D57ECBDB4AB886A0BDB8 /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E3DB18B4F58449E8D2191F8 /* Lato-Regular.ttf */; };
+		98FFDAEE9F324AEBAE27D799 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 26BD7D0CC2E64AE6A25FD69A /* Roboto-Bold.ttf */; };
+		E0D15DC783644637A6AAF8A0 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3DC15E95EBC540568AD0C455 /* Roboto-Medium.ttf */; };
+		A960394048A043A59A9248C9 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BC6429433A384F46BA15F287 /* Roboto-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +50,12 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ReactNativeExchangeRates/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-ReactNativeExchangeRates-ReactNativeExchangeRatesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeExchangeRates-ReactNativeExchangeRatesTests.release.xcconfig"; path = "Target Support Files/Pods-ReactNativeExchangeRates-ReactNativeExchangeRatesTests/Pods-ReactNativeExchangeRates-ReactNativeExchangeRatesTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		D8E0F10E1BDF4C968040D1D6 /* Lato-Black.ttf */ = {isa = PBXFileReference; name = "Lato-Black.ttf"; path = "../src/assets/fonts/Lato-Black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		ED1A2A3D7C834A3DAEFA7605 /* Lato-Bold.ttf */ = {isa = PBXFileReference; name = "Lato-Bold.ttf"; path = "../src/assets/fonts/Lato-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0E3DB18B4F58449E8D2191F8 /* Lato-Regular.ttf */ = {isa = PBXFileReference; name = "Lato-Regular.ttf"; path = "../src/assets/fonts/Lato-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		26BD7D0CC2E64AE6A25FD69A /* Roboto-Bold.ttf */ = {isa = PBXFileReference; name = "Roboto-Bold.ttf"; path = "../src/assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3DC15E95EBC540568AD0C455 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; name = "Roboto-Medium.ttf"; path = "../src/assets/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		BC6429433A384F46BA15F287 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; name = "Roboto-Regular.ttf"; path = "../src/assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +134,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				BF3374F956EA447A92EAC773 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -147,6 +160,20 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		BF3374F956EA447A92EAC773 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				D8E0F10E1BDF4C968040D1D6 /* Lato-Black.ttf */,
+				ED1A2A3D7C834A3DAEFA7605 /* Lato-Bold.ttf */,
+				0E3DB18B4F58449E8D2191F8 /* Lato-Regular.ttf */,
+				26BD7D0CC2E64AE6A25FD69A /* Roboto-Bold.ttf */,
+				3DC15E95EBC540568AD0C455 /* Roboto-Medium.ttf */,
+				BC6429433A384F46BA15F287 /* Roboto-Regular.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -244,6 +271,12 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				F6346352748E42FBB32B9692 /* Lato-Black.ttf in Resources */,
+				8A8AE88DC6D04E0A96EDA0C7 /* Lato-Bold.ttf in Resources */,
+				C4E3D57ECBDB4AB886A0BDB8 /* Lato-Regular.ttf in Resources */,
+				98FFDAEE9F324AEBAE27D799 /* Roboto-Bold.ttf in Resources */,
+				E0D15DC783644637A6AAF8A0 /* Roboto-Medium.ttf in Resources */,
+				A960394048A043A59A9248C9 /* Roboto-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
