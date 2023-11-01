@@ -1,6 +1,6 @@
 import {useWindowDimensions} from 'react-native';
 import React from 'react';
-import {Text, useFont} from '@shopify/react-native-skia';
+import {Text, matchFont, useFont, useFonts} from '@shopify/react-native-skia';
 import {
   SharedValue,
   interpolate,
@@ -12,29 +12,36 @@ interface LabelProps {
   max: number;
   min: number;
   y: SharedValue<number>;
-  x: SharedValue<number>;
-  dates: string[];
+  todaysRate: number;
 }
 const format = (value: number) => {
   'worklet';
-  return value
-    .toFixed(3)
-    .toString()
-    .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+  return value.toFixed(3).toString();
 };
 
-export const Label = ({y, max, min, x, dates}: LabelProps) => {
+const formatDiffPrice = (value: number) => {
+  'worklet';
+  if (value > 0) {
+    return `+${value.toFixed(3)}`;
+  } else {
+    return value.toFixed(3).toString();
+  }
+};
+
+const TOP_PADDING = 24;
+const HORIZONTAL_PADDING = 32;
+
+export const Label = ({y, max, min, todaysRate}: LabelProps) => {
   const {width, height} = useWindowDimensions();
-  const priceFontSize = 32;
-  const dateFontSize = 20;
-  const priceFont = useFont(
-    require('../assets/fonts/Roboto-Bold.ttf'),
-    priceFontSize,
-  );
-  const dateFont = useFont(
-    require('../assets/fonts/Roboto-Bold.ttf'),
-    dateFontSize,
-  );
+
+  const fontMgr = useFonts({
+    Lato: [
+      require('../assets/fonts/Lato-Regular.ttf'),
+      require('../assets/fonts/Lato-Bold.ttf'),
+      require('../assets/fonts/Lato-Black.ttf'),
+    ],
+  });
+
   const currentPrice = useDerivedValue(() => {
     return format(
       interpolate(
@@ -48,35 +55,73 @@ export const Label = ({y, max, min, x, dates}: LabelProps) => {
     );
   }, [y, max, min]);
 
-  const priceWidth = priceFont?.getTextWidth(currentPrice.value) ?? 0;
-
-  const selectedDate = useDerivedValue(() => {
-    const fraction = x.value / width;
-    const timeframes = dates.length;
-    const currentPoint = Math.round(fraction * (timeframes - 1));
-
-    return dates[currentPoint].slice(0, 10);
+  const priceDiff = useDerivedValue(() => {
+    return formatDiffPrice(+currentPrice.value - todaysRate);
   });
 
-  const dateWidth = dateFont?.getTextWidth(selectedDate.value) ?? 0;
+  const priceDiffColor = useDerivedValue(() => {
+    if (priceDiff.value[0] === '+') {
+      return '#42E2B8';
+    } else if (priceDiff.value.length === 5) {
+      return 'yellow';
+    } else {
+      return 'red';
+    }
+  });
+
+  if (!fontMgr) {
+    return null;
+  }
+
+  const priceLabelFontStyle = {
+    fontFamily: 'Lato',
+    fontWeight: 'bold',
+    fontSize: 18,
+  } as const;
+
+  const priceFontStyle = {
+    fontFamily: 'Lato',
+    fontWeight: '900',
+    fontSize: 32,
+  } as const;
+
+  const priceDiffFontStyle = {
+    fontFamily: 'Lato',
+    fonWeight: '900',
+    fontSize: 16,
+  } as const;
+
+  const priceLabelFont = matchFont(priceLabelFontStyle, fontMgr);
+
+  const priceFont = matchFont(priceFontStyle, fontMgr);
+
+  const priceDiffFont = matchFont(priceDiffFontStyle, fontMgr);
 
   return (
     <>
       <Text
         style={'fill'}
+        text={'CURRENT RATE'}
+        color={'white'}
+        font={priceLabelFont}
+        x={HORIZONTAL_PADDING}
+        y={TOP_PADDING}
+      />
+      <Text
+        style={'fill'}
         text={currentPrice}
         color={'white'}
-        x={width / 2 - priceWidth / 2}
-        y={priceFontSize}
+        x={HORIZONTAL_PADDING}
+        y={TOP_PADDING + 32 + 8} //fontSize + gap
         font={priceFont}
       />
       <Text
         style={'fill'}
-        text={selectedDate}
-        color={'white'}
-        x={width / 2 - dateWidth / 2}
-        y={priceFontSize * 2}
-        font={dateFont}
+        text={priceDiff}
+        color={priceDiffColor} //#42E2B8
+        x={HORIZONTAL_PADDING}
+        y={TOP_PADDING + 14 + 32 + 8 * 2} //fontSize+prevFontSize + gap + gap
+        font={priceDiffFont}
       />
     </>
   );
