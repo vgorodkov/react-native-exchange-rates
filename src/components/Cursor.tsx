@@ -1,6 +1,6 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
-import {Circle, Group, Paint} from '@shopify/react-native-skia';
+import {Circle, Group, Paint, Text} from '@shopify/react-native-skia';
 import {SharedValue, useDerivedValue} from 'react-native-reanimated';
 
 export const Cursor = ({
