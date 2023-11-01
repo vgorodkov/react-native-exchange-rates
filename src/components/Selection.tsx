@@ -1,22 +1,56 @@
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, Pressable, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
-import {Canvas, RoundedRect} from '@shopify/react-native-skia';
+import {Canvas, RoundedRect, useFont} from '@shopify/react-native-skia';
 import {handleDate} from '../utils/handleDate';
-import {useDerivedValue, withSpring} from 'react-native-reanimated';
+import {useDerivedValue, withTiming} from 'react-native-reanimated';
 import {GraphPeriods} from '../constants/time';
+
+interface SelectionItemProps {
+  setStartDate: (date: string) => void;
+  setActiveItem: (itemIndex: number) => void;
+  item: GraphPeriods;
+  itemIndex: number;
+  isActive: boolean;
+}
+
+const SelectionItem = ({
+  setStartDate,
+  setActiveItem,
+  item,
+  itemIndex,
+  isActive,
+}: SelectionItemProps) => {
+  const textColor = isActive ? 'white' : 'lightgray';
+  return (
+    <Pressable
+      onPress={() => {
+        setStartDate(handleDate(item));
+        setActiveItem(itemIndex);
+      }}
+      style={[styles.btn]}>
+      <Text style={[styles.btnText, {color: textColor}]}>
+        {item[0] + item[1].toUpperCase()}
+      </Text>
+    </Pressable>
+  );
+};
 
 interface SelectionProps {
   setStartDate: (date: string) => void;
 }
 
-const BUTTON_WIDTH = 50;
+const {width} = Dimensions.get('window');
+
+const SELECTION_HORIZONTAL_SPACING = 32;
+const BUTTON_WIDTH = (width - SELECTION_HORIZONTAL_SPACING * 2) / 5;
+const BUTTON_HEIGHT = 48;
 
 export const Selection = ({setStartDate}: SelectionProps) => {
-  const [active, setActive] = useState(0);
+  const [activeItem, setActiveItem] = useState(0);
 
   const translateX = useDerivedValue(
-    () => withSpring(BUTTON_WIDTH * active),
-    [active],
+    () => withTiming(BUTTON_WIDTH * activeItem, {duration: 300}),
+    [activeItem],
   );
   const graphPeriods = [
     GraphPeriods.oneWeek,
@@ -27,30 +61,27 @@ export const Selection = ({setStartDate}: SelectionProps) => {
   ];
 
   return (
-    <View style={styles.root}>
-      <View style={styles.container}>
-        <Canvas style={StyleSheet.absoluteFill}>
-          <RoundedRect
-            x={translateX}
-            y={0}
-            height={64}
-            width={50}
-            r={16}
-            color={'#9999C3'}
-          />
-        </Canvas>
-        {graphPeriods.map((item, index) => (
-          <Pressable
-            key={index}
-            onPress={() => {
-              setStartDate(handleDate(item));
-              setActive(index);
-            }}
-            style={styles.btn}>
-            <Text style={styles.btnText}>{item[0] + item[1]}</Text>
-          </Pressable>
-        ))}
-      </View>
+    <View style={styles.container}>
+      <Canvas style={StyleSheet.absoluteFill}>
+        <RoundedRect
+          x={translateX}
+          y={0}
+          height={BUTTON_HEIGHT}
+          width={BUTTON_WIDTH}
+          r={32}
+          color={'rgba(171,2,154,0.5)'}
+        />
+      </Canvas>
+      {graphPeriods.map((item, index) => (
+        <SelectionItem
+          key={index}
+          item={item}
+          itemIndex={index}
+          setActiveItem={setActiveItem}
+          setStartDate={setStartDate}
+          isActive={activeItem === index}
+        />
+      ))}
     </View>
   );
 };
@@ -58,24 +89,20 @@ export const Selection = ({setStartDate}: SelectionProps) => {
 export default Selection;
 
 const styles = StyleSheet.create({
-  root: {paddingHorizontal: 16},
   container: {
-    borderRadius: 16,
     flexDirection: 'row',
-    backgroundColor: '#493548',
     alignSelf: 'center',
   },
   btn: {
-    height: 64,
-    width: 50,
+    height: BUTTON_HEIGHT,
+    width: BUTTON_WIDTH,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 16,
   },
   btnText: {
-    fontSize: 16,
+    fontSize: 20,
     color: 'white',
-    fontWeight: '700',
+    fontFamily: 'Lato-Bold',
     textAlign: 'center',
   },
 });

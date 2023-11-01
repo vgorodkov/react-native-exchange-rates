@@ -1,4 +1,4 @@
-import {StyleSheet, Text, Image, Pressable} from 'react-native';
+import {StyleSheet, Text, Image, Pressable, View} from 'react-native';
 import React, {memo} from 'react';
 
 interface CurrencyItemProps {
@@ -6,14 +6,20 @@ interface CurrencyItemProps {
   name: string;
   id: number;
   img: number;
+  isActive: boolean;
 }
 
 export const CurrencyItem = memo(
-  ({changeCurrency, name, id, img}: CurrencyItemProps) => {
+  ({changeCurrency, name, id, img, isActive}: CurrencyItemProps) => {
     return (
-      <Pressable onPress={() => changeCurrency(id)} style={styles.currencyItem}>
-        <Image style={styles.currencyImg} source={img} />
-        <Text style={styles.currencyItemTxt}>{name}</Text>
+      <Pressable
+        onPress={() => changeCurrency(id)}
+        style={() => [styles.currencyItem]}>
+        <View style={{flexDirection: 'row', gap: 16}}>
+          <Image style={styles.currencyImg} source={img} />
+          <Text style={styles.currencyItemTxt}>{name}</Text>
+        </View>
+        {isActive && <View style={styles.activityIndicator} />}
       </Pressable>
     );
   },
@@ -21,15 +27,13 @@ export const CurrencyItem = memo(
 
 const styles = StyleSheet.create({
   currencyItem: {
-    borderWidth: 1,
     borderColor: 'white',
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     gap: 16,
-    paddingHorizontal: 24,
+
     paddingVertical: 12,
-    margin: 12,
-    borderRadius: 16,
   },
   currencyItemTxt: {
     color: 'white',
@@ -37,8 +41,14 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   currencyImg: {
-    width: 40,
-    height: 40,
+    width: 32,
+    height: 32,
+    borderRadius: 100,
+  },
+  activityIndicator: {
+    width: 32,
+    height: 32,
+    backgroundColor: 'rgba(171, 2, 154, 1)',
     borderRadius: 100,
   },
 });
