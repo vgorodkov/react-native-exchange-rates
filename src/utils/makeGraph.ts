@@ -5,10 +5,20 @@ import {LAYOUT} from '../constants/layout';
 
 export const makeGraph = (data: DataPoint[], width: number, height: number) => {
   if (data) {
+    if (data.length > 180) {
+      data = data.filter(item => {
+        const date = new Date(item.Date);
+        if (date.getDay() === 0) {
+          return item;
+        }
+      });
+    }
+    const dates = data.map(item => item.Date);
+
     const max = Math.max(...data.map(val => val.Cur_OfficialRate));
     const min = Math.min(...data.map(val => val.Cur_OfficialRate));
-    const maxDate = data[data.length - 1].Date;
-    const minDate = data[0].Date;
+    const maxDate = dates[dates.length - 1];
+    const minDate = dates[0];
     const y = scaleLinear()
       .domain([min, max])
       .range([
@@ -32,7 +42,8 @@ export const makeGraph = (data: DataPoint[], width: number, height: number) => {
       curve: skPath!,
       maxDate,
       minDate,
-      timeFrames: data.length,
+      timeFrames: dates.length,
+      dates,
     };
   }
 };
