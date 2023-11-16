@@ -1,6 +1,6 @@
 import {useWindowDimensions} from 'react-native';
 import React from 'react';
-import {Text, matchFont, useFont, useFonts} from '@shopify/react-native-skia';
+import {Text, matchFont, useFonts} from '@shopify/react-native-skia';
 import {
   SharedValue,
   interpolate,
@@ -13,6 +13,8 @@ interface LabelProps {
   min: number;
   y: SharedValue<number>;
   todaysRate: number;
+
+  currencyQuotName: string;
 }
 const format = (value: number) => {
   'worklet';
@@ -31,8 +33,14 @@ const formatDiffPrice = (value: number) => {
 const TOP_PADDING = 24;
 const HORIZONTAL_PADDING = 32;
 
-export const Label = ({y, max, min, todaysRate}: LabelProps) => {
-  const {width, height} = useWindowDimensions();
+export const Label = ({
+  y,
+  max,
+  min,
+  todaysRate,
+  currencyQuotName,
+}: LabelProps) => {
+  const {height} = useWindowDimensions();
 
   const fontMgr = useFonts({
     Lato: [
@@ -101,7 +109,7 @@ export const Label = ({y, max, min, todaysRate}: LabelProps) => {
     <>
       <Text
         style={'fill'}
-        text={'CURRENT RATE'}
+        text={'CURRENT RATE  TO' + ` ${currencyQuotName}`}
         color={'white'}
         font={priceLabelFont}
         x={HORIZONTAL_PADDING}
