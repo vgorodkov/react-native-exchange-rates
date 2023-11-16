@@ -34,7 +34,6 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 
-import Cursor from './src/components/Cursor';
 import {getYForX} from './src/utils/math';
 import {CurrencyItem} from './src/components/CurrencyItem';
 import useCurrencyDynamicsFetch from './src/hooks/useCurrencyDynamicsFetch';
@@ -46,6 +45,8 @@ import {GraphPeriods} from './src/constants/time';
 import ListHeader from './src/components/ListHeader';
 import LinearGradient from 'react-native-linear-gradient';
 import {DateIndicator} from './src/components/DateIndicator';
+import {Cursor} from './src/components/Cursor';
+import useCurrencyInfo from './src/hooks/useCurrencyInfo';
 
 const ListSeparator = () => {
   return <View style={styles.separator} />;
@@ -85,6 +86,8 @@ const App = () => {
     currentDate,
   );
 
+  const {data: currencyInfo} = useCurrencyInfo(currencyId);
+
   const graph = data.length > 0 ? makeGraph(data, width, height / 2) : null;
   const dates = data?.map(item => item.Date);
 
@@ -105,6 +108,8 @@ const App = () => {
     }
   }, [data.length]);
 
+  const isGraphTouched = useSharedValue(false);
+
   const x = useSharedValue(width); //start pos = right because current date is the last one on graph
   const y = useDerivedValue(() => {
     if (graphs.current.current?.curve) {
@@ -116,7 +121,6 @@ const App = () => {
 
   const transitionChartAnimation = () => {
     isTransitionCompleted.current = 0;
-
     runTiming(isTransitionCompleted, 1, {
       duration: 500,
       easing: Easing.inOut(Easing.cubic),
@@ -149,8 +153,9 @@ const App = () => {
     return result?.toSVGString() ?? '';
   }, [isTransitionCompleted, graphs.current.current, graphs.current]);
 
-  const newGesture = Gesture.Pan()
+  const graphGesture = Gesture.Pan()
     .onBegin(e => {
+      isGraphTouched.value = true;
       if (graph) {
         const dayPositions = Array.from(
           {length: graph?.timeFrames},
@@ -169,6 +174,9 @@ const App = () => {
         const closest = findClosestValue(e.x, dayPositions);
         x.value = withTiming(closest!, {duration: 300});
       }
+    })
+    .onEnd(() => {
+      isGraphTouched.value = false;
     });
 
   if (isLoading && data.length <= 0) {
@@ -183,9 +191,9 @@ const App = () => {
     <GestureHandlerRootView style={styles.root}>
       <StatusBar hidden />
       <LinearGradient colors={['#1F0121', '#000000']} style={styles.container}>
-        {graphs.current.current && (
+        {graphs.current.current && currencyInfo && (
           <View style={styles.canvasContainer}>
-            <GestureDetector gesture={newGesture}>
+            <GestureDetector gesture={graphGesture}>
               <Canvas
                 style={{
                   width: width,
@@ -196,6 +204,7 @@ const App = () => {
                   min={graphs.current.current.min}
                   y={y}
                   todaysRate={data[data.length - 1].Cur_OfficialRate}
+                  currencyQuotName={currencyInfo.Cur_QuotName_Eng.toUpperCase()}
                 />
                 <Group transform={[{translateY: LAYOUT.spacing.GRAPH_TOP}]}>
                   <Path
@@ -210,6 +219,7 @@ const App = () => {
                     height={height / 2}
                     width={width}
                     dates={dates}
+                    isGraphTouched={isGraphTouched}
                   />
                 </Group>
               </Canvas>

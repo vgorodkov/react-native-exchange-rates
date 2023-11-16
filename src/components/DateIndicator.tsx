@@ -1,6 +1,5 @@
-import {StyleSheet} from 'react-native';
 import React from 'react';
-import {Rect, Text, useFont} from '@shopify/react-native-skia';
+import {Group, Rect, Text, useFont} from '@shopify/react-native-skia';
 import {SharedValue, useDerivedValue} from 'react-native-reanimated';
 
 interface DateIndicatorProps {
@@ -8,15 +7,17 @@ interface DateIndicatorProps {
   height: number;
   width: number;
   dates: string[];
+  isGraphTouched: SharedValue<boolean>;
 }
 
-const INDICATOR_WIDTH = 16;
+const INDICATOR_WIDTH = 8;
 
 export const DateIndicator = ({
   x,
   height,
   dates,
   width,
+  isGraphTouched,
 }: DateIndicatorProps) => {
   const fontSize = 16;
   const font = useFont(require('../assets/fonts/Lato-Bold.ttf'), fontSize);
@@ -36,26 +37,34 @@ export const DateIndicator = ({
   const dateFontWidth = font?.getTextWidth(selectedDate.value);
 
   const dateX = useDerivedValue(() => {
-    if (x.value - dateFontWidth / 2 < 0) {
-      return 0;
-    } else if (x.value + dateFontWidth / 2 > width) {
-      return width - dateFontWidth;
+    if (dateFontWidth) {
+      if (x.value - dateFontWidth / 2 < 0) {
+        return 0;
+      } else if (x.value + dateFontWidth / 2 > width) {
+        return width - dateFontWidth;
+      }
+      return x.value - dateFontWidth / 2;
     }
-    return x.value - dateFontWidth / 2;
+    return x.value;
+  });
+
+  const indicatorVisibility = useDerivedValue(() => {
+    if (isGraphTouched.value) {
+      return 1;
+    }
+    return 0;
   });
 
   return (
-    <>
+    <Group opacity={indicatorVisibility}>
       <Text x={dateX} y={0} text={selectedDate} color={'white'} font={font} />
-      {/*  <Rect
+      <Rect
         x={rectX}
-        y={0}
+        y={32}
         width={INDICATOR_WIDTH}
         height={height}
-        color={'rgba(179,222,193,0.5)'}
-      /> */}
-    </>
+        color={'rgba(179,222,193,0.3)'}
+      />
+    </Group>
   );
 };
-
-const styles = StyleSheet.create({});
