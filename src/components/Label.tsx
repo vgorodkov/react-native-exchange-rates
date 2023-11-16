@@ -12,9 +12,8 @@ interface LabelProps {
   max: number;
   min: number;
   y: SharedValue<number>;
-  todaysRate: number;
-
   currencyQuotName: string;
+  todaysRate: number;
 }
 const format = (value: number) => {
   'worklet';
@@ -37,8 +36,8 @@ export const Label = ({
   y,
   max,
   min,
-  todaysRate,
   currencyQuotName,
+  todaysRate,
 }: LabelProps) => {
   const {height} = useWindowDimensions();
 

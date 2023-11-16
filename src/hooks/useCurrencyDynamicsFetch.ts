@@ -34,7 +34,7 @@ function useCurrencyDynamicsFetch(
         if (axios.isCancel(e)) {
           // Request was canceled, no need to handle errors in this case
         } else {
-          setError('An error occurred while fetching data.');
+          setError('An error occurred while fetching dynamics data.');
           console.error(e);
         }
       })

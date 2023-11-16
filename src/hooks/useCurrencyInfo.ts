@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import axios, {AxiosResponse} from 'axios';
 
-interface CurrencyInfo {
+export interface CurrencyInfo {
   Cur_ID: number;
   Cur_ParentID: number;
   Cur_Code: string;
