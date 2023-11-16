@@ -25,5 +25,3 @@ export const Cursor = ({
     </Group>
   );
 };
-
-export default Cursor;
