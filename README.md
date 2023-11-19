@@ -27,15 +27,26 @@ yarn install
 
 ## Usage
 
-1.Start the React Native development server:
-npm start
-# or
-yarn start
+1. **Start the React Native Development Server:**
 
-2.Run the app on an emulator or physical device:
-npm run android
-# or
-npm run ios
+    ```bash
+    npm start
+    # or
+    yarn start
+    ```
 
+2. **Run the App on an Emulator or Physical Device:**
+
+    - For Android:
+
+        ```bash
+        npm run android
+        ```
+
+    - For iOS:
+
+        ```bash
+        npm run ios
+        ```
 
 
