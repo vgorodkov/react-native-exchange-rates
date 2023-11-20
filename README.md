@@ -24,8 +24,7 @@ The React Native Exchange Rates App is a mobile application that provides users 
 To run the app locally, follow these steps:
 
 ```bash
-git clone https://github.com/your-username/react-native-exchange-rates.git
-cd react-native-exchange-rates
+git clone https://github.com/vgorodkov/react-native-exchange-rates
 npm install
 # or
 yarn install
