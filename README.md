@@ -1,6 +1,9 @@
 # React Native Exchange Rates App
 
-![App Screenshot](link-to-screenshot.png) <!-- Replace with a screenshot of your app -->
+![App Video]
+https://github.com/vgorodkov/react-native-exchange-rates/assets/116522921/cde4ac52-9cf5-4375-8043-4f3267aa6bf1
+
+
 
 ## Description
 
