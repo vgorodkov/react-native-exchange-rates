@@ -1,6 +1,10 @@
 # React Native Exchange Rates App
 
-![graphs_video](https://github.com/vgorodkov/react-native-exchange-rates/assets/116522921/621035af-2ab7-48da-9b44-c686b38f12ac)
+
+
+
+https://github.com/vgorodkov/react-native-exchange-rates/assets/116522921/150f3ea1-fefe-4a20-9b0c-888459ac7fb2
+
 
 
 
